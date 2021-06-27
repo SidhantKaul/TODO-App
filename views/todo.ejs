@@ -1,0 +1,76 @@
+<%- include("partials/header.ejs") -%>
+
+
+  <div class="head">
+    <img class="every-img" src="\images\bg-desktop-dark.jpg" alt="">
+  </div>
+  <div class="wrapper">
+    <div class="outer">
+      <div class="heading">
+        <div class="text">
+          <h1><a href="/">TO DO </a><span><p><%= title %> </p></span></h1>
+        </div>
+      </div>
+      <div class="list">
+        <form class="" action="/addList" method="post">
+          <div class="input-group mb-3">
+          <input type="text" class="form-control shadow-none inpt" autocomplete="off" name="list_name" placeholder="Create new list....."  aria-describedby="button-addon2">
+          <button class="btn btn-outline-secondary shadow-none" type="submit" id="button-addon2">Enter</button>
+        </div>
+        </form>
+      </div>
+      <div class="flexbox-container">
+  <%      items.forEach(function(item) { %>
+          <div class="flex-item">
+            <form class="" action="/mark" method="post">
+              <div class="form-check">
+              <input  type="hidden" name="check" value="<%= title %> <%= item._id %>">
+            <%  if(item.delId===0) { %>
+                <input  class="form-check-input shadow-none" onChange="this.form.submit()" name="check" type="checkbox" value="<%= title %> <%= item._id %>" id="flexCheckDefault">
+            <%  } else if(item.delId===1) { %>
+                  <input  class="form-check-input shadow-none" onChange="this.form.submit()" name="check" type="checkbox" value="<%= title %> <%= item._id %>" id="flexCheckDefault" checked>
+              <%  } %>
+              <p><%= item.todo %></p>
+            </div>
+            </form>
+          </div>
+    <%    }); %>
+      </div>
+      <div class="filter-1">
+        <p class="item-l" ></p>
+        <div class="filt">
+          <a href="/all/<%= title %>">All</a>
+          <a href="/active/<%= title %>">Active</a>
+          <a href="/comp/<%= title %>">Completed</a>
+        </div>
+        <a class="right" href="/del/<%= title %>">Clear completed</a>
+      </div>
+      <div class="filter-2">
+        <div class="inside-link">
+          <a href="/all/<%= title %>">All</a>
+          <a href="/active/<%= title %>">Active</a>
+          <a href="/comp/<%= title %>">Completed</a>
+        </div>
+      </div>
+      <form class="" action="/add" method="post">
+        <div class="item-enter">
+          <div class="input-group mb-3">
+          <input type="text" class="form-control shadow-none inpt" autocomplete="off" name="list_item" placeholder="Add new task....."  aria-describedby="button-addon2">
+          <button class="btn btn-outline-secondary shadow-none" type="submit" name="enter" value="<%= title %>" id="button-addon2">Add Task</button>
+        </div>
+        </div>
+      </form>
+    </div>
+    <div class="custom-list">
+      <h4>Lists</h4>
+      <%  listArr.forEach(function(list) { %>
+          <div class="list-ext">
+            <a href="/list/<%= list.listName %>"><%= list.listName %></a>
+            <a class="bin-tag" href="/dellist/<%= list._id %>"><i class="fas fa-trash-alt"></i></a>
+          </div>
+    <%    }); %>
+    </div>
+  </div>
+
+
+<%- include("partials/footer.ejs") -%>
